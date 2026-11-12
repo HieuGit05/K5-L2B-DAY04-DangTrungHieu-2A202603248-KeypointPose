@@ -125,18 +125,20 @@ giữ nguyên bởi vì đã kiểm tra và gán nhãn đúng
    ![Label person](images/1_label_person.png)
 
 Nguồn ảnh: COCO val2017 / Wikimedia Commons.
+
 2. Một người quay lưng đã gán, cờ đã đặt:
 
    ![Người quay lưng](images/2_nguoi_quay_lung.png)
 
 Nguồn ảnh: COCO val2017 / Wikimedia Commons.
+
 3. Một khuôn mặt đã gán 13 điểm, phóng to vùng mắt:
 
    ![Khuôn mặt phóng to](images/3_mat_phong_to.png)
    
 Nguồn ảnh: COCO val2017 / Wikimedia Commons.
 
-5. Một đoạn JSON xuất của một người:
+4. Một đoạn JSON xuất của một người:
 
    ![JSON export](images/4_json_export.png)
 
@@ -249,21 +251,8 @@ Thấy rõ mắt thì có thể là v = 2. Vẫn tối, không thấy mắt thì
 ### B3 — Model so với nhãn của tôi (không tính điểm)
 
 không làm
-- Demo đã dùng:
-- Ảnh đã thử:
 
-1. Model có trả điểm cho khớp bị che, hay khớp ngoài ảnh không? Confidence ở các điểm đó thế nào?
-
-   ...
-
-2. Với người quay lưng, model có đổi trái/phải không?
-
-   ...
-
-3. Bộ điểm của model có giống 17 điểm COCO không?
-
-   ...
 
 ## 9. Tài liệu tham khảo và công cụ AI đã dùng
 
-Dùng claude để giải thích về kiến thức về ảnh hồng ngoại 
+Dùng claude để giải thích về kiến thức về ảnh hồng ngoại, heatmap, OWS 
