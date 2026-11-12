@@ -1,20 +1,19 @@
-# Báo cáo cá nhân — HoVaTen-MSSV
+# Báo cáo cá nhân - Đặng Trung Hiếu - 2A202603248
 
-Đổi tên file theo quy tắc `MSSV_HoTen.md`. Ví dụ: `20241234_NguyenVanAn.md`.
 
 Dữ liệu: 12 ảnh người COCO val2017 (Lin et al., 2014) và 8 ảnh chân dung Wikimedia Commons, chỉ dùng trong lớp.
 
 ## 0. Thông tin học viên
 
-- Họ tên:
-- MSSV:
-- Email:
-- Link repository:
+- Họ tên: Đặng Trung Hiếu
+- MSSV: 2A202603248
+- Email: ladykiller12.2005@gmail.com
+- Link repository: 
 - Phiên bản CVAT (Help → About):
-- Máy: hệ điều hành ___ · RAM ___ GB · chạy CVAT chế độ đầy đủ / lite
-- Bộ ảnh (`src/exports/assignment.json` do `lab.py setup` tạo): có / không
-- Giờ bắt đầu:
-- Giờ kết thúc:
+- Máy: hệ điều hành Win 11 · RAM 16 GB · chạy CVAT chế độ đầy đủ 
+- Bộ ảnh (`src/exports/assignment.json` do `lab.py setup` tạo): có 
+- Giờ bắt đầu: 16h30 12/11/2026
+- Giờ kết thúc: 12h 13/11/2026
 
 ## 1. Kiểm tra label (CP0)
 
@@ -33,15 +32,15 @@ Cách đổi cờ `occluded` / `outside` cho **một điểm** trên phiên bả
 
 | Nhóm ảnh | Số ảnh | Số skeleton đã gán | Số người dưới 60 px (không gán) | Số poster / gương / màn hình bỏ qua | Thời gian (phút) |
 |---|---:|---:|---:|---:|---:|
-| `easy` | 5 | | | | |
-| `occluded` | 3 | | | | |
-| `back` | 2 | | | | |
-| `small` | 1 | | | | |
-| `crowd` | 1 | | | | |
-| `faces` | 8 | | — | | |
+| `easy` | 5 |5 | 0 |0 | 15p |
+| `occluded` | 3 | 3 |0 |0 |15p |
+| `back` | 2 |2 | 0| 0|15p |
+| `small` | 1 |1 |0 |0 | 15p|
+| `crowd` | 1 | 1| 3| 0| 15p |
+| `faces` | 8 |8 | — | 0 | 15p |
 
-- Số ảnh người đã xong ở mốc phút 105: ___ / 10
-- Thời gian thực tế (phút): CP1 ___ · CP2 ___ · CP3 ___
+- Số ảnh người đã xong ở mốc phút 105: 10 / 10
+- Thời gian thực tế (phút): CP1 1h · CP2 1h · CP3 1h
 - Ảnh tốn thời gian nhất là ảnh nào, vì sao?
 
 ...
