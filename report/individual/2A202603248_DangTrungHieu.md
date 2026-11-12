@@ -8,7 +8,7 @@ Dữ liệu: 12 ảnh người COCO val2017 (Lin et al., 2014) và 8 ảnh chân
 - Họ tên: Đặng Trung Hiếu
 - MSSV: 2A202603248
 - Email: ladykiller12.2005@gmail.com
-- Link repository: 
+- Link repository: https://github.com/HieuGit05/K5-L2B-DAY04-DangTrungHieu-2A202603248-KeypointPose
 - Phiên bản CVAT (Help → About):
 - Máy: hệ điều hành Win 11 · RAM 16 GB · chạy CVAT chế độ đầy đủ 
 - Bộ ảnh (`src/exports/assignment.json` do `lab.py setup` tạo): có 
