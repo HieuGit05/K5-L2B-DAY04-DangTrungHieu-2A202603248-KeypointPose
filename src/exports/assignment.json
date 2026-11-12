@@ -1,0 +1,65 @@
+{
+ "mssv": "2A202603248",
+ "ten": "DangTrungHieu",
+ "pool_version": "d04-k5-v2",
+ "cvat_user": "hieucvat",
+ "project": "d04-keypoint",
+ "persons": [
+  "000000103970.jpg",
+  "000000184224.jpg",
+  "000000225138.jpg",
+  "000000314154.jpg",
+  "000000349521.jpg",
+  "000000090646.jpg",
+  "000000183176.jpg",
+  "000000375535.jpg",
+  "000000359340.jpg",
+  "000000461002.jpg",
+  "000000106051.jpg",
+  "000000332273.jpg"
+ ],
+ "faces": [
+  "face_10579.jpg",
+  "face_125051.jpg",
+  "face_261458.jpg",
+  "face_105668.jpg",
+  "face_185015.jpg",
+  "face_143959.jpg",
+  "face_146049.jpg",
+  "face_560526.jpg"
+ ],
+ "tasks": {
+  "persons": {
+   "task_id": 14,
+   "job_id": 14,
+   "task_name": "persons-DangTrungHieu"
+  },
+  "faces": {
+   "task_id": 15,
+   "job_id": 15,
+   "task_name": "faces-DangTrungHieu"
+  },
+  "persons-extra": {
+   "task_id": 16,
+   "job_id": 16,
+   "task_name": "persons-extra-DangTrungHieu"
+  },
+  "faces-extra": {
+   "task_id": 17,
+   "job_id": 17,
+   "task_name": "faces-extra-DangTrungHieu"
+  }
+ },
+ "persons_extra": [
+  "000000065350.jpg",
+  "000000161603.jpg",
+  "000000507223.jpg"
+ ],
+ "faces_extra": [
+  "face_102517.jpg",
+  "face_317330.jpg",
+  "face_344941.jpg",
+  "face_507166.jpg",
+  "face_68290.jpg"
+ ]
+}
