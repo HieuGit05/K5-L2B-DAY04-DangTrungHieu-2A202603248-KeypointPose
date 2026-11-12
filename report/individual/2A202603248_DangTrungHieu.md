@@ -184,7 +184,7 @@ Nhận diện hành động: “giơ tay trái” bị hiểu thành “giơ tay
 
 ## 8. Khó khăn và lỗi kỹ thuật
 
-**1. `lab.py` bị lỗi khi chạy `check` / `setup` (lúc ___)**
+**1. `lab.py` bị lỗi khi chạy `check` / `setup` 
 - Lệnh: `python lab.py check` và `python lab.py setup --mssv 2A202603248 --ten DangTrungHieu`.
 - Lỗi: `NotADirectoryError: [WinError 267] The directory name is invalid` ở bước 4 ("Lỗi kẹt Connecting... (Nuclio)"), dòng 110 `shell_in_dir`.
 - Nguyên nhân:
