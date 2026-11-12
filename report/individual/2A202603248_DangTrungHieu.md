@@ -19,14 +19,14 @@ Dữ liệu: 12 ảnh người COCO val2017 (Lin et al., 2014) và 8 ảnh chân
 
 | Label | Kiểu | Số điểm | Tên điểm đúng bảng của lab? | Đúng thứ tự? | Số cạnh |
 |---|---|---:|---|---|---:|
-| `person` | skeleton  17 điểm| | | | |
-| `face` | skeleton | 13 điểm | | | |
+| `person` | skeleton | 17 | Có | Có | 19 |
+| `face` | skeleton | 13 | Có | Có | 13 |
 
-Mẫu `person` dựng theo người quay mặt về camera (các điểm `left_*` nằm bên phải khung mẫu)? Có / Không
+Mẫu `person` dựng theo người quay mặt về camera (các điểm `left_*` nằm bên phải khung mẫu)? Có
 
 Cách đổi cờ `occluded` / `outside` cho **một điểm** trên phiên bản CVAT này (một câu):
 
-...
+Bấm chuột phải vào điểm đó trên ảnh rồi chọn Occluded (hoặc Outside) trong menu hiện ra.
 
 ## 2. Số lượng đã gán và thời gian (CP1, CP2)
 
@@ -116,7 +116,7 @@ Kết quả: ĐẠT (đọc lại từng cảnh báo ở trên)
 Các `[CẢNH BÁO]` còn giữ nguyên và lý do:
 000000332273.jpg #1: cặp ankle nằm ngược phía so với các cặp còn lại. Có thể đổi trái/phải một cặp (`lr_swap`), hoặc tay / chân bắt chéo thật: kiểm lại.
 giữ nguyên bởi vì đã kiểm tra và gán nhãn đúng 
-...
+
 
 ## 6. Ảnh chụp màn hình
 
@@ -124,15 +124,18 @@ giữ nguyên bởi vì đã kiểm tra và gán nhãn đúng
 
    ![Label person](images/1_label_person.png)
 
+Nguồn ảnh: COCO val2017 / Wikimedia Commons.
 2. Một người quay lưng đã gán, cờ đã đặt:
 
    ![Người quay lưng](images/2_nguoi_quay_lung.png)
 
+Nguồn ảnh: COCO val2017 / Wikimedia Commons.
 3. Một khuôn mặt đã gán 13 điểm, phóng to vùng mắt:
 
    ![Khuôn mặt phóng to](images/3_mat_phong_to.png)
-
-4. Một đoạn JSON xuất của một người:
+   
+Nguồn ảnh: COCO val2017 / Wikimedia Commons.
+5. Một đoạn JSON xuất của một người:
 
    ![JSON export](images/4_json_export.png)
 
@@ -142,19 +145,65 @@ Nguồn ảnh: COCO val2017 / Wikimedia Commons.
 
 1. Lỗi bạn mắc nhiều nhất hôm nay, và cách bạn sẽ tránh ở dự án thật:
 
-   ...
+   bị mắc nhiều nhất ở phần `occluded` / `outside` cách tránh sẽ là đọc kĩ guideline, không rõ thì hỏi 
 
 2. Một quy tắc bạn đề xuất thêm vào guideline (kèm ảnh ví dụ nếu có):
 
-   ...
+   không có
 
 3. Nhãn của bạn đi vào model ở đâu? Chọn một lỗi bạn đã sửa và nói nó sẽ làm model học sai thế nào (heatmap, trọng số trong loss, hay bước lật ảnh):
 
-   ...
+- Heatmap bị “chia đôi”
+
+Model học từ nhiều ví dụ mâu thuẫn: có ảnh left_wrist nằm ở tay trái thật, có ảnh lại nằm ở tay phải. Để giảm loss, heatmap của left_wrist thường có hai đỉnh, ở cả hai tay, hoặc một đỉnh mờ.
+
+Đỉnh sai mạnh hơn: model chọn nhầm tay.
+Hai đỉnh gần ngang nhau: điểm dự đoán có thể rơi vào giữa hai tay, không đúng khớp nào.
+
+- Học theo bên của ảnh thay vì bên của người
+
+Lỗi lr_swap hay xảy ra ở người quay lưng, vì người gán quên đổi mẫu, như 2 ảnh back bạn đã sửa. Nếu lỗi này phổ biến, model dễ học một quy tắc sai kiểu “left là bên trái của ảnh”, thay vì bên trái của người. Model sẽ đúng với một hướng nhưng sai hàng loạt khi người quay hướng ngược lại.
+
+- Bước lật ảnh làm lỗi trầm trọng thêm
+
+Khi huấn luyện, ảnh được lật ngang và tên trái/phải được đổi theo. Với nhãn đúng, việc này giúp model hiểu tính đối xứng. Với nhãn đã bị đảo, lật ảnh lại nhân đôi các ví dụ mâu thuẫn, nên model càng khó phân biệt hai bên.
+
+- Điểm đánh giá giảm mạnh
+
+Khi đánh giá bằng OKS, hai điểm bị đảo nằm ở hai bên người, cách vị trí đúng rất xa, nên điểm đó gần như bị tính là sai hoàn toàn. Một người bị đảo cả người có thể bị chấm rất thấp, dù vị trí các khớp đều “đúng chỗ”.
+Trong các nghiên cứu phân tích lỗi pose estimation, nhầm trái/phải được xếp thành một loại lỗi riêng (thường gọi là inversion) và là loại lỗi phổ biến, ví dụ trong nghiên cứu của Ronchi và Perona (2017) về chẩn đoán lỗi trên COCO.
+
+- Ảnh hưởng tới ứng dụng thật
+
+Phân tích thể thao: báo nhầm vận động viên dùng chân trái hay chân phải.
+Vật lý trị liệu: đếm nhầm bài tập của tay bị thương.
+Nhận diện hành động: “giơ tay trái” bị hiểu thành “giơ tay phải”.
 
 ## 8. Khó khăn và lỗi kỹ thuật
 
-...
+**1. `lab.py` bị lỗi khi chạy `check` / `setup` (lúc ___)**
+- Lệnh: `python lab.py check` và `python lab.py setup --mssv 2A202603248 --ten DangTrungHieu`.
+- Lỗi: `NotADirectoryError: [WinError 267] The directory name is invalid` ở bước 4 ("Lỗi kẹt Connecting... (Nuclio)"), dòng 110 `shell_in_dir`.
+- Nguyên nhân:
+  - CVAT được bật bằng `docker compose` trong Ubuntu (WSL), nên thư mục compose là đường dẫn Linux `/home/hieuadmin/cvat-day2`, còn `lab.py` chạy bằng Python trên Windows nên không mở được thư mục này.
+  - Máy tôi có cài thêm Nuclio (dùng cho SAM ở Day 3), nhưng bước 4 chỉ tìm container có tên chứa "cvat"/"traefik" nên không nhận ra Nuclio và báo nhầm là tên `nuclio` bị trỏ sai (sang 172.18.0.20, là IP của container Nuclio thật).
+- Ảnh hưởng: script dừng trước khi ghi `docker-compose.override.yml` hay sửa `/etc/hosts`; tôi đã kiểm tra lại và CVAT không bị thay đổi gì. Các bước 1–3 (Docker, CVAT 2.74.1, OPA 445 quy tắc) đều [OK].
+- Cách xử lý: chạy `python lab.py setup --mssv 2A202603248 --ten DangTrungHieu --bonus --skip-check`.
+
+
+**2. Cảnh báo của `src/check_submission.py`**
+- `[CẢNH BÁO] 000000332273.jpg #1: cặp ankle nằm ngược phía so với các cặp còn lại`.
+- Đã kiểm lại trong CVAT: đã kiểm tra lại gán đúng rồi không cần sửa.
+- Kết quả cuối của script: 0 lỗi, 1 cảnh báo, ĐẠT.
+
+**3. Điểm cần lưu ý khi đọc file xuất**
+- 78 điểm `v = 0` vẫn giữ tọa độ cũ, không về `0, 0` (CVAT 2.x xuất như vậy; script ghi chú đây không phải lỗi).
+
+**4. Khó khăn khi gán nhãn**
+- Xác định trái/phải theo người (không theo ảnh), nhất là người quay lưng: mẫu `person` dựng theo người quay mặt nên phải đổi trái/phải.
+- Phân vân cờ `v` cho điểm bị che một phần (giữa `v = 1` và `v = 2`), và cách áp quy tắc "ba người ước lượng có gần nhau không".
+- Cách đo ngưỡng 60 px để quyết định có gán người nhỏ hay không.
+- Thời gian tốn nhiều nhất: 30p
 
 ## Bonus (nếu làm)
 
@@ -162,24 +211,43 @@ Nguồn ảnh: COCO val2017 / Wikimedia Commons.
 
 | Ảnh | Số skeleton | Số người dưới 60 px | Ca khó nhất |
 |---|---:|---:|---|
-| | | | |
-| | | | |
-| | | | |
+| `000000065350.jpg` | 2 | không có | không có ca khó |
+| `000000161603.jpg` | 1 | có 4 người | ảnh bị ngược sáng và mờ không rõ các khớp của người |
+| `000000507223.jpg` | 3 | không có | không có ca khó |
 
-Kết quả `src/check_submission.py` cho `HoVaTen_bonus_persons.zip`:
+Kết quả `src/check_submission.py` cho `DangTrungHieu_bonus_persons.zip`:
 
 ```text
-(dán ở đây)
+[CẢNH BÁO] 000000161603.jpg #1: các điểm chỉ trải cao 43 px (< 60 px). Người dưới 60 px không gán; nếu người cao hơn nhưng bị cắt khung thì bỏ qua cảnh báo này.
+[CẢNH BÁO] 000000507223.jpg #3: cặp ankle nằm ngược phía so với các cặp còn lại. Có thể đổi trái/phải một cặp (`lr_swap`), hoặc tay / chân bắt chéo thật: kiểm lại.
+
+- File person: DangTrungHieu_bonus_persons.zip
+  Số ảnh: 3 · số skeleton `person`: 6 · mỗi annotation 51 số
+  Skeleton theo ảnh: 000000065350=2, 000000161603=1, 000000507223=3
+  Cờ v: v=2 65 (64%) · v=1 5 (5%) · v=0 32 (31%)
+  num_keypoints trung bình: 11.7
+- File face: DangTrungHieu_bonus_faces.zip
+  Số ảnh: 5 · số skeleton `face`: 5 · mỗi annotation 39 số
+  Skeleton theo ảnh: face_102517=1, face_317330=1, face_344941=1, face_507166=1, face_68290=1
+  Cờ v: v=2 61 (94%) · v=1 0 (0%) · v=0 4 (6%)
+  num_keypoints trung bình: 12.2
+- Ghi chú: 36 điểm v = 0 vẫn mang tọa độ cũ (CVAT 2.x xuất như vậy; chuẩn COCO ghi 0, 0). Không phải lỗi: điểm v = 0 bị bỏ qua khi huấn luyện và khi chấm.
+- Số [LỖI]: 0 · số [CẢNH BÁO]: 2
+Kết quả: ĐẠT (đọc lại từng cảnh báo ở trên)
 ```
 
 ### B2 — 5 ảnh khuôn mặt đen trắng / hồng ngoại
 
 Ảnh không màu khó hơn ở điểm nào? Kính râm trên ảnh hồng ngoại có còn là `v = 1` không?
 
-...
+- Ảnh không màu khó hơn ở điểm xác định vùng mắt vì nhiều người có hốc mắt khá sâu, sâu thì sẽ đen sẵn thì với ảnh màu thì nhìn càng khó xác định, 
+
+- Ánh sáng hồng ngoại đi xuyên qua được nhiều loại kính râm, nên trên ảnh hồng ngoại thường vẫn thấy mắt sau tròng kính.
+Thấy rõ mắt thì có thể là v = 2. Vẫn tối, không thấy mắt thì là v = 1, như quy tắc với ảnh màu.
 
 ### B3 — Model so với nhãn của tôi (không tính điểm)
 
+không làm
 - Demo đã dùng:
 - Ảnh đã thử:
 
@@ -197,4 +265,4 @@ Kết quả `src/check_submission.py` cho `HoVaTen_bonus_persons.zip`:
 
 ## 9. Tài liệu tham khảo và công cụ AI đã dùng
 
-...
+Dùng claude để giải thích về kiến thức về ảnh hồng ngoại 
