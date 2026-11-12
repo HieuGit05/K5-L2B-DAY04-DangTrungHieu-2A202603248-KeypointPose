@@ -135,6 +135,7 @@ Nguồn ảnh: COCO val2017 / Wikimedia Commons.
    ![Khuôn mặt phóng to](images/3_mat_phong_to.png)
    
 Nguồn ảnh: COCO val2017 / Wikimedia Commons.
+
 5. Một đoạn JSON xuất của một người:
 
    ![JSON export](images/4_json_export.png)
