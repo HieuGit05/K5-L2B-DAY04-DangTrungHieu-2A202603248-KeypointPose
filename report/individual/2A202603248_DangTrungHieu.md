@@ -36,7 +36,7 @@ Bấm chuột phải vào điểm đó trên ảnh rồi chọn Occluded (hoặc
 | `occluded` | 3 | 3 |0 |0 |30p |
 | `back` | 2 |2 | 0| 0|30p |
 | `small` | 1 |1 |0 |0 | 30p|
-| `crowd` | 1 | 1| 3| 0| 15p |
+| `crowd` | 1 | 1| 0| 0| 15p |
 | `faces` | 8 |8 | — | 0 | 15p |
 
 - Số ảnh người đã xong ở mốc phút 105: 10 / 10
