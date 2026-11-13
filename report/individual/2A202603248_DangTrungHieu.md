@@ -189,7 +189,7 @@ Nhận diện hành động: “giơ tay trái” bị hiểu thành “giơ tay
 - Lỗi: `NotADirectoryError: [WinError 267] The directory name is invalid` ở bước 4 ("Lỗi kẹt Connecting... (Nuclio)"), dòng 110 `shell_in_dir`.
 - Nguyên nhân:
   - CVAT được bật bằng `docker compose` trong Ubuntu (WSL), nên thư mục compose là đường dẫn Linux `/home/hieuadmin/cvat-day2`, còn `lab.py` chạy bằng Python trên Windows nên không mở được thư mục này.
-  - Máy tôi có cài thêm Nuclio (dùng cho SAM ở Day 3), nhưng bước 4 chỉ tìm container có tên chứa "cvat"/"traefik" nên không nhận ra Nuclio và báo nhầm là tên `nuclio` bị trỏ sai (sang 172.18.0.20, là IP của container Nuclio thật).
+  - Máy em có cài thêm Nuclio (dùng cho SAM ở Day 3), nhưng bước 4 chỉ tìm container có tên chứa "cvat"/"traefik" nên không nhận ra Nuclio và báo nhầm là tên `nuclio` bị trỏ sai (sang 172.18.0.20, là IP của container Nuclio thật).
 - Ảnh hưởng: script dừng trước khi ghi `docker-compose.override.yml` hay sửa `/etc/hosts`; tôi đã kiểm tra lại và CVAT không bị thay đổi gì. Các bước 1–3 (Docker, CVAT 2.74.1, OPA 445 quy tắc) đều [OK].
 - Cách xử lý: chạy `python lab.py setup --mssv 2A202603248 --ten DangTrungHieu --bonus --skip-check`.
 
